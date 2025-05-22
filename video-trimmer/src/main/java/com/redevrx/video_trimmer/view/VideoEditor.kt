@@ -117,7 +117,6 @@ class VideoEditor @JvmOverloads constructor(
             GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
                 override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
                     onClickVideoPlayPause()
-                    Toast.makeText(context,"Click",Toast.LENGTH_LONG).show()
                     return true
                 }
             })
@@ -256,8 +255,8 @@ class VideoEditor @JvmOverloads constructor(
     private fun setSeekBarPosition() {
         when {
             mDuration >= mMaxDuration && mMaxDuration != -1 -> {
-                mStartPosition = mDuration / 2 - mMaxDuration / 2
-                mEndPosition = mDuration / 2 + mMaxDuration / 2
+                mStartPosition = 0
+                mEndPosition = mMaxDuration.toLong()
                 binding.timeLineBar.setThumbValue(0, (mStartPosition * 100 / mDuration))
                 binding.timeLineBar.setThumbValue(1, (mEndPosition * 100 / mDuration))
             }
@@ -455,6 +454,7 @@ class VideoEditor @JvmOverloads constructor(
 //    }
 
     fun destroy() {
+        mPlayer.release()
         BackgroundExecutor.cancelAll("", true)
         UiThreadExecutor.cancelAll("")
     }
