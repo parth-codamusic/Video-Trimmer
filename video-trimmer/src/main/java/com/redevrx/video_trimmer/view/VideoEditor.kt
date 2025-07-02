@@ -312,6 +312,11 @@ class VideoEditor @JvmOverloads constructor(
         mPlayer.pause()
 //        binding.videoLoader.pause()
         binding.iconVideoPlay.visibility = View.VISIBLE
+        if (mTimeVideo > mMaxDuration) {
+            mStartPosition = mEndPosition - mMaxDuration
+            mTimeVideo = mEndPosition - mStartPosition
+            setTimeFrames()
+        }
     }
 
 //    private fun onVideoCompleted() {
